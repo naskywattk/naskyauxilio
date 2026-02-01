@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Naskywa Interface</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        background: radial-gradient(circle at top, #05070d, #02030a);
+        height: 100vh;
+        overflow: hidden;
+        color: #00f6ff;
+    }
+
+    .panel {
+        position: fixed;
+        top: 80px;
+        left: 80px;
+        width: 320px;
+        background: rgba(5, 10, 20, 0.85);
+        border: 1px solid #00f6ff55;
+        border-radius: 14px;
+        box-shadow: 0 0 25px #00f6ff33;
+        backdrop-filter: blur(10px);
+    }
+
+    .header {
+        padding: 14px;
+        cursor: move;
+        text-align: center;
+        font-weight: bold;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #00f6ff22, transparent);
+        border-bottom: 1px solid #00f6ff33;
+    }
+
+    .section {
+        padding: 14px;
+    }
+
+    .item {
+        margin-bottom: 14px;
+    }
+
+    .item label {
+        font-size: 12px;
+        opacity: 0.85;
+    }
+
+    .slider {
+        width: 100%;
+    }
+
+    .toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .switch {
+        width: 42px;
+        height: 22px;
+        background: #0a1a22;
+        border-radius: 20px;
+        position: relative;
+        cursor: pointer;
+        border: 1px solid #00f6ff44;
+    }
+
+    .switch::before {
+        content: '';
+        width: 18px;
+        height: 18px;
+        background: #00f6ff;
+        border-radius: 50%;
+        position: absolute;
+        top: 1px;
+        left: 2px;
+        transition: 0.3s;
+    }
+
+    .switch.active::before {
+        left: 21px;
+        background: #00ff9d;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 10px;
+        font-size: 11px;
+        opacity: 0.6;
+        border-top: 1px solid #00f6ff22;
+    }
+</style>
+</head>
+<body>
+
+<div class="panel" id="panel">
+    <div class="header">NASKYWA</div>
+
+    <div class="section">
+        <div class="item">
+            <label>Precisão</label>
+            <input type="range" min="0" max="100" value="50" class="slider">
+        </div>
+
+        <div class="item">
+            <label>Estabilidade</label>
+            <input type="range" min="0" max="100" value="30" class="slider">
+        </div>
+
+        <div class="item toggle">
+            <label>Assistência</label>
+            <div class="switch"></div>
+        </div>
+
+        <div class="item toggle">
+            <label>Bloqueio</label>
+            <div class="switch"></div>
+        </div>
+
+        <div class="item toggle">
+            <label>Informações</label>
+            <div class="switch"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Production UI • Futuristic Concept
+    </div>
+</div>
+
+<script>
+    // switches
+    document.querySelectorAll('.switch').forEach(sw => {
+        sw.addEventListener('click', () => {
+            sw.classList.toggle('active');
+        });
+    });
+
+    // drag panel
+    const panel = document.getElementById("panel");
+    let isDragging = false, offsetX, offsetY;
+
+    panel.querySelector('.header').addEventListener('mousedown', e => {
+        isDragging = true;
+        offsetX = e.clientX - panel.offsetLeft;
+        offsetY = e.clientY - panel.offsetTop;
+    });
+
+    document.addEventListener('mousemove', e => {
+        if (isDragging) {
+            panel.style.left = (e.clientX - offsetX) + 'px';
+            panel.style.top = (e.clientY - offsetY) + 'px';
+        }
+    });
+
+    document.addEventListener('mouseup', () => isDragging = false);
+</script>
+
+</body>
+</html>
